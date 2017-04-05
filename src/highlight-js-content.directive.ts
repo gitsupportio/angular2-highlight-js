@@ -1,15 +1,29 @@
-import { Directive, ElementRef, Input, OnInit, AfterViewChecked } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 declare var hljs: any;
 
-@Directive({ selector: '[highlight-js-content]' })
+@Directive({
+    selector: '[highlight-js-content]'
+})
+export class HighlightJsContentDirective implements OnInit, OnDestroy, AfterViewChecked {
+    constructor(private elementRef: ElementRef) { }
 
-export class HighlightJsContentDirective implements OnInit, AfterViewChecked {
     @Input() useBr: boolean;
     @Input('highlight-js-content') highlightSelector: string;
 
-    constructor(private elementRef: ElementRef) {
-
+    private allowChange: boolean = true;
+    private _subscription: Subscription | null;
+    @Input()
+    set changes(val: Observable<void> | null) {
+        if (this._subscription) {
+            this._subscription.unsubscribe();
+            this._subscription = null;
+        }
+        if (val) {
+            this._subscription = val.subscribe(() => this.allowChange = true);
+        }
     }
 
     ngOnInit() {
@@ -17,15 +31,24 @@ export class HighlightJsContentDirective implements OnInit, AfterViewChecked {
             hljs.configure({ useBR: true });
         }
     }
+    ngOnDestroy() {
+        if (this._subscription) {
+            this._subscription.unsubscribe();
+            this._subscription = null;
+        }
+    }
 
     ngAfterViewChecked() {
         let selector = this.highlightSelector || 'code';
 
         if (this.elementRef.nativeElement.innerHTML) {
+            if (!this.allowChange) return;
+            this.allowChange = false;
 
             let snippets = this.elementRef.nativeElement.querySelectorAll(selector);
             
-            for(var snippet of snippets){
+            for(var snippet of snippets) {
+                console.log("Updating highlights!");
                 hljs.highlightBlock(snippet);
             } 
         }
