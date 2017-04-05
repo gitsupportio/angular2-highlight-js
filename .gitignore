@@ -39,4 +39,19 @@ typings
 !systemjs.config.js
 !typings/typings.d.ts
 
+src/**/*.js.map
+src/**/*.js
+src/**/*.metadata.json
+src/**/*.ngfactory.ts
+demo/**/*.js.map
+demo/**/*.js
+demo/**/*.metadata.json
+demo/**/*.ngfactory.ts
+demo/**/*.ngstyle.ts
+test/**/*.js.map
+test/**/*.js
+**/*.ngfactory.json
+**/*.ngsummary.json
+lib
+
 npm-debug.log.*

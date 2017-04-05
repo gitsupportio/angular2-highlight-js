@@ -8,3 +8,5 @@ Thumbs.db
 *.*.ts
 *.ts
 !*.d.ts
+test
+demo

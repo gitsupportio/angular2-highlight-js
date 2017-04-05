@@ -4,8 +4,8 @@ import { HighlightJsService } from '../src/highlight-js.service'; //in live this
 
 @Component({
     selector: 'demo',
-    templateUrl: './demo/demo.component.html',
-    styleUrls: ['./demo/demo.component.css']
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 
 export class DemoComponent implements OnInit, AfterViewInit {
