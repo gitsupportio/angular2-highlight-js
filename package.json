@@ -1,6 +1,6 @@
 {
-    "name": "@aboveyou00/angular-highlight-js",
-    "version": "5.0.0",
+    "name": "@gitsupport/angular-highlight-js",
+    "version": "5.0.1",
     "description": "highlight.js integration with Angular 2",
     "directories": {},
     "files": [
